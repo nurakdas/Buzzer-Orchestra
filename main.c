@@ -5,8 +5,8 @@
 #define SYSCLK 72000000L
 #define BAUDRATE 115200L
 
-#define BUZZER1 P2_1
-#define BUZZER2 P3_7
+#define BUZZER1 P3_7
+#define BUZZER2 P2_1
 #define BUZZER3 P0_1
 #define BUZZER4 P1_0
 #define BUZZER5 P2_0
@@ -31,15 +31,6 @@
 #define F5  1432
 #define Fd5 1351
 #define G5  1276
-
-#define C6 955
-#define D6 864
-#define E6 758
-#define F6 715
-#define G6 638
-#define A6 568
-#define B6 506
-#define C7 478
 
 char _c51_external_startup (void) {
 	// Disable Watchdog with key sequence
@@ -181,47 +172,44 @@ void initsound () {
 
 void buzz1 (int period) {
 	BUZZER1 = 1;
-	waitus(period);
+	waitus(period/2);
 	BUZZER1 = 0;
-	waitus(period);
+	waitus(period/2);
 }
 
 void buzz2 (int period) {
 	BUZZER2 = 1;
-	waitus(period);
+	waitus(period/2);
 	BUZZER2 = 0;
-	waitus(period);
+	waitus(period/2);
 }
 
 void buzz3 (int period) {
 	BUZZER3 = 1;
-	waitus(period);
+	waitus(period/2);
 	BUZZER3 = 0;
-	waitus(period);
+	waitus(period/2);
 }
 
 void buzz4 (int period) {
 	BUZZER4 = 1;
-	waitus(period);
+	waitus(period/2);
 	BUZZER4 = 0;
-	waitus(period);
+	waitus(period/2);
 }
 
 void buzz5 (int period) {
 	BUZZER5 = 1;
-	waitus(period);
+	waitus(period/2);
 	BUZZER5 = 0;
-	waitus(period);
+	waitus(period/2);
 }
 
 void main () {
+	initsound();
 
-  initsound();
-  int note = E6;
-
-  while (1) {
-
-
-  }
+ 	while (1) {
+		buzz1(C4);
+  	}
 
 }
