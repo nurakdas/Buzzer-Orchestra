@@ -1,0 +1,1286 @@
+0000              1   ;--------------------------------------------------------
+0000              2   ; File Created by C51
+0000              3   ; Version 1.0.0 #1069 (Apr 23 2015) (MSVC)
+0000              4   ; This file was generated Tue Mar 31 21:04:15 2020
+0000              5   ;--------------------------------------------------------
+                  5   $name main
+                  6   $optc51 --model-small
+0000              8            R_DSEG    segment data
+0000              9            R_CSEG    segment code
+0000             10            R_BSEG    segment bit
+0000             11            R_XSEG    segment xdata
+0000             12            R_PSEG    segment xdata
+0000             13            R_ISEG    segment idata
+0000             14            R_OSEG    segment data overlay
+0000             15            BIT_BANK  segment data overlay
+0000             16            R_HOME    segment code
+0000             17            R_GSINIT  segment code
+0000             18            R_IXSEG   segment xdata
+0000             19            R_CONST   segment code
+0000             20            R_XINIT   segment code
+0000             21            R_DINIT   segment code
+0000             22   
+0000             23   ;--------------------------------------------------------
+0000             24   ; Public variables in this module
+0000             25   ;--------------------------------------------------------
+0000             26            public _main
+0000             27            public _soundpulse
+0000             28            public _wait_timer
+0000             29            public _GetPeriod
+0000             30            public _waitms
+0000             31            public _wait_1ms
+0000             32            public _waitus
+0000             33            public _wait_1us
+0000             34            public _PrintNumber
+0000             35            public _delay
+0000             36            public _PrintNumber_PARM_3
+0000             37            public _PrintNumber_PARM_2
+0000             38            public _HexDigit
+0000             39   ;--------------------------------------------------------
+0000             40   ; Special Function Registers
+0000             41   ;--------------------------------------------------------
+0000             42   ;--------------------------------------------------------
+0000             43   ; special function bits
+0000             44   ;--------------------------------------------------------
+0000             45   ;--------------------------------------------------------
+0000             46   ; overlayable register banks
+0000             47   ;--------------------------------------------------------
+0000             48            rbank0 segment data overlay
+0000             49   ;--------------------------------------------------------
+0000             50   ; internal ram data
+0000             51   ;--------------------------------------------------------
+0000             52            rseg R_DSEG
+0000             53   _HexDigit:
+0000             54            ds 17
+0011             55   _PrintNumber_PARM_2:
+0011             56            ds 2
+0013             57   _PrintNumber_PARM_3:
+0013             58            ds 2
+0015             59   _PrintNumber_j_1_11:
+0015             60            ds 2
+0017             61   _PrintNumber_buff_1_11:
+0017             62            ds 33
+0038             63   _main_fref_1_36:
+0038             64            ds 4
+003C             65   ;--------------------------------------------------------
+003C             66   ; overlayable items in internal ram 
+003C             67   ;--------------------------------------------------------
+0000             68            rseg    R_OSEG
+0000             69            rseg    R_OSEG
+0000             70   ;--------------------------------------------------------
+0000             71   ; indirectly addressable internal ram data
+0000             72   ;--------------------------------------------------------
+0000             73            rseg R_ISEG
+0000             74   ;--------------------------------------------------------
+0000             75   ; absolute internal ram data
+0000             76   ;--------------------------------------------------------
+0000             77            DSEG
+0000             78   ;--------------------------------------------------------
+0000             79   ; bit data
+0000             80   ;--------------------------------------------------------
+0000             81            rseg R_BSEG
+0000             82   ;--------------------------------------------------------
+0000             83   ; paged external ram data
+0000             84   ;--------------------------------------------------------
+0000             85            rseg R_PSEG
+0000             86   ;--------------------------------------------------------
+0000             87   ; external ram data
+0000             88   ;--------------------------------------------------------
+0000             89            rseg R_XSEG
+0000             90   ;--------------------------------------------------------
+0000             91   ; absolute external ram data
+0000             92   ;--------------------------------------------------------
+0000             93            XSEG
+0000             94   ;--------------------------------------------------------
+0000             95   ; external initialized ram data
+0000             96   ;--------------------------------------------------------
+0000             97            rseg R_IXSEG
+0000             98            rseg R_HOME
+0000             99            rseg R_GSINIT
+0000            100            rseg R_CSEG
+0000            101   ;--------------------------------------------------------
+0000            102   ; Reset entry point and interrupt vectors
+0000            103   ;--------------------------------------------------------
+0000            104            CSEG at 0x0000
+0000 020100     105            ljmp    _crt0
+0003            106   ;--------------------------------------------------------
+0003            107   ; global & static initialisations
+0003            108   ;--------------------------------------------------------
+0000            109            rseg R_HOME
+0000            110            rseg R_GSINIT
+0000            111            rseg R_GSINIT
+0000            112   ;--------------------------------------------------------
+0000            113   ; data variables initialization
+0000            114   ;--------------------------------------------------------
+0000            115            rseg R_DINIT
+0000            116   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:20: char HexDigit[]="0123456789ABCDEF";
+0000 757030     117            mov     _HexDigit,#0x30
+0003 757131     118            mov     (_HexDigit + 0x0001),#0x31
+0006 757232     119            mov     (_HexDigit + 0x0002),#0x32
+0009 757333     120            mov     (_HexDigit + 0x0003),#0x33
+000C 757434     121            mov     (_HexDigit + 0x0004),#0x34
+000F 757535     122            mov     (_HexDigit + 0x0005),#0x35
+0012 757636     123            mov     (_HexDigit + 0x0006),#0x36
+0015 757737     124            mov     (_HexDigit + 0x0007),#0x37
+0018 757838     125            mov     (_HexDigit + 0x0008),#0x38
+001B 757939     126            mov     (_HexDigit + 0x0009),#0x39
+001E 757A41     127            mov     (_HexDigit + 0x000a),#0x41
+0021 757B42     128            mov     (_HexDigit + 0x000b),#0x42
+0024 757C43     129            mov     (_HexDigit + 0x000c),#0x43
+0027 757D44     130            mov     (_HexDigit + 0x000d),#0x44
+002A 757E45     131            mov     (_HexDigit + 0x000e),#0x45
+002D 757F46     132            mov     (_HexDigit + 0x000f),#0x46
+0030 758000     133            mov     (_HexDigit + 0x0010),#0x00
+0033            134            ; The linker places a 'ret' at the end of segment R_DINIT.
+0033            135   ;--------------------------------------------------------
+0033            136   ; code
+0033            137   ;--------------------------------------------------------
+0000            138            rseg R_CSEG
+0000            139   ;------------------------------------------------------------
+0000            140   ;Allocation info for local variables in function 'delay'
+0000            141   ;------------------------------------------------------------
+0000            142   ;dly                       Allocated to registers r2 r3 
+0000            143   ;------------------------------------------------------------
+0000            144   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:15: void delay(int dly)
+0000            145   ;        -----------------------------------------
+0000            146   ;         function delay
+0000            147   ;        -----------------------------------------
+0000            148   _delay:
+0000            149            using   0
+0000 AA82       150            mov     r2,dpl
+0002 AB83       151            mov     r3,dph
+0004            152   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:17: while( dly--);
+0004            153   L002001?:
+0004 8A04       154            mov     ar4,r2
+0006 8B05       155            mov     ar5,r3
+0008 1A         156            dec     r2
+0009 BAFFD0     157            cjne    r2,#0xff,L002008?
+000C 1B         158            dec     r3
+000D            159   L002008?:
+000D EC         160            mov     a,r4
+000E 4D         161            orl     a,r5
+000F 7001       162            jnz     L002001?
+0011 22         163            ret
+0012            164   ;------------------------------------------------------------
+0012            165   ;Allocation info for local variables in function 'PrintNumber'
+0012            166   ;------------------------------------------------------------
+0012            167   ;Base                      Allocated with name '_PrintNumber_PARM_2'
+0012            168   ;digits                    Allocated with name '_PrintNumber_PARM_3'
+0012            169   ;N                         Allocated to registers r2 r3 
+0012            170   ;j                         Allocated with name '_PrintNumber_j_1_11'
+0012            171   ;buff                      Allocated with name '_PrintNumber_buff_1_11'
+0012            172   ;------------------------------------------------------------
+0012            173   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:21: void PrintNumber(int N, int Base, int digits)
+0012            174   ;        -----------------------------------------
+0012            175   ;         function PrintNumber
+0012            176   ;        -----------------------------------------
+0012            177   _PrintNumber:
+0012 AA82       178            mov     r2,dpl
+0014 AB83       179            mov     r3,dph
+0016            180   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:26: buff[NBITS]=0;
+0016 757000     181            mov     (_PrintNumber_buff_1_11 + 0x0020),#0x00
+0019            182   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:29: while ( (N>0) | (digits>0) )
+0019 75001F     183            mov     _PrintNumber_j_1_11,#0x1F
+001C E4         184            clr     a
+001D F501       185            mov     (_PrintNumber_j_1_11 + 1),a
+001F AEE0       186            mov     r6,_PrintNumber_PARM_3
+0021 AFE1       187            mov     r7,(_PrintNumber_PARM_3 + 1)
+0023            188   L003003?:
+0023 C3         189            clr     c
+0024 E4         190            clr     a
+0025 9A         191            subb    a,r2
+0026 E4         192            clr     a
+0027 6480       193            xrl     a,#0x80
+0029 8BF0       194            mov     b,r3
+002B 63F080     195            xrl     b,#0x80
+002E 95F0       196            subb    a,b
+0030 E4         197            clr     a
+0031 33         198            rlc     a
+0032 FC         199            mov     r4,a
+0033 C3         200            clr     c
+0034 E4         201            clr     a
+0035 9E         202            subb    a,r6
+0036 E4         203            clr     a
+0037 6480       204            xrl     a,#0x80
+0039 8FF0       205            mov     b,r7
+003B 63F080     206            xrl     b,#0x80
+003E 95F0       207            subb    a,b
+0040 E4         208            clr     a
+0041 33         209            rlc     a
+0042 FD         210            mov     r5,a
+0043 4C         211            orl     a,r4
+0044 6001       212            jz      L003005?
+0046            213   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:31: buff[j--]=HexDigit[N%Base];
+0046 AC00       214            mov     r4,_PrintNumber_j_1_11
+0048 AD01       215            mov     r5,(_PrintNumber_j_1_11 + 1)
+004A 1500       216            dec     _PrintNumber_j_1_11
+004C 74FF       217            mov     a,#0xff
+004E B500D0     218            cjne    a,_PrintNumber_j_1_11,L003013?
+0051 1501       219            dec     (_PrintNumber_j_1_11 + 1)
+0053            220   L003013?:
+0053 EC         221            mov     a,r4
+0054 2450       222            add     a,#_PrintNumber_buff_1_11
+0056 F8         223            mov     r0,a
+0057 853000     224            mov     __modsint_PARM_2,_PrintNumber_PARM_2
+005A 853101     225            mov     (__modsint_PARM_2 + 1),(_PrintNumber_PARM_2 + 1)
+005D 8A82       226            mov     dpl,r2
+005F 8B83       227            mov     dph,r3
+0061 C002       228            push    ar2
+0063 C003       229            push    ar3
+0065 C006       230            push    ar6
+0067 C007       231            push    ar7
+0069 C000       232            push    ar0
+006B 120100     233            lcall   __modsint
+006E AC82       234            mov     r4,dpl
+0070 D000       235            pop     ar0
+0072 D007       236            pop     ar7
+0074 D006       237            pop     ar6
+0076 D003       238            pop     ar3
+0078 D002       239            pop     ar2
+007A EC         240            mov     a,r4
+007B 2470       241            add     a,#_HexDigit
+007D F9         242            mov     r1,a
+007E 8704       243            mov     ar4,@r1
+0080 A604       244            mov     @r0,ar4
+0082            245   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:32: N/=Base;
+0082 853000     246            mov     __divsint_PARM_2,_PrintNumber_PARM_2
+0085 853101     247            mov     (__divsint_PARM_2 + 1),(_PrintNumber_PARM_2 + 1)
+0088 8A82       248            mov     dpl,r2
+008A 8B83       249            mov     dph,r3
+008C C006       250            push    ar6
+008E C007       251            push    ar7
+0090 120100     252            lcall   __divsint
+0093 AA82       253            mov     r2,dpl
+0095 AB83       254            mov     r3,dph
+0097 D007       255            pop     ar7
+0099 D006       256            pop     ar6
+009B            257   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:33: if(digits!=0) digits--;
+009B EE         258            mov     a,r6
+009C 4F         259            orl     a,r7
+009D 7001       260            jnz     L003014?
+009F 020100     261            ljmp    L003003?
+00A2            262   L003014?:
+00A2 1E         263            dec     r6
+00A3 BEFF70     264            cjne    r6,#0xff,L003015?
+00A6 1F         265            dec     r7
+00A7            266   L003015?:
+00A7 020100     267            ljmp    L003003?
+00AA            268   L003005?:
+00AA            269   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:35: eputs(&buff[j+1]);
+00AA E500       270            mov     a,_PrintNumber_j_1_11
+00AC 04         271            inc     a
+00AD 2450       272            add     a,#_PrintNumber_buff_1_11
+00AF FA         273            mov     r2,a
+00B0 7B00       274            mov     r3,#0x00
+00B2 7C40       275            mov     r4,#0x40
+00B4 8A82       276            mov     dpl,r2
+00B6 8B83       277            mov     dph,r3
+00B8 8CF0       278            mov     b,r4
+00BA 020100     279            ljmp    _eputs
+00BD            280   ;------------------------------------------------------------
+00BD            281   ;Allocation info for local variables in function 'wait_1us'
+00BD            282   ;------------------------------------------------------------
+00BD            283   ;------------------------------------------------------------
+00BD            284   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:38: void wait_1us(void) 
+00BD            285   ;        -----------------------------------------
+00BD            286   ;         function wait_1us
+00BD            287   ;        -----------------------------------------
+00BD            288   _wait_1us:
+00BD            289   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:41: STK_RVR = (F_CPU/1000000L) - 1;  // set reload register, counter rolls over from zero, hence -1
+00BD 90E014     290            mov     dptr,#0xE014
+00C0 75F000     291            mov     b,#0x00
+00C3 742F       292            mov     a,#0x2F
+00C5 120100     293            lcall   __gptrput
+00C8 A3         294            inc     dptr
+00C9 E4         295            clr     a
+00CA 120100     296            lcall   __gptrput
+00CD            297   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:42: STK_CVR = 0; // load the SysTick counter
+00CD 90E018     298            mov     dptr,#0xE018
+00D0 E4         299            clr     a
+00D1 F5F0       300            mov     b,a
+00D3 120100     301            lcall   __gptrput
+00D6 A3         302            inc     dptr
+00D7 E4         303            clr     a
+00D8 120100     304            lcall   __gptrput
+00DB            305   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:43: STK_CSR = 0x05; // Bit 0: ENABLE, BIT 1: TICKINT, BIT 2:CLKSOURCE
+00DB 90E010     306            mov     dptr,#0xE010
+00DE 75F000     307            mov     b,#0x00
+00E1 7405       308            mov     a,#0x05
+00E3 120100     309            lcall   __gptrput
+00E6 A3         310            inc     dptr
+00E7 E4         311            clr     a
+00E8 120100     312            lcall   __gptrput
+00EB            313   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:44: while((STK_CSR & BIT16)==0); // Bit 16 is the COUNTFLAG.  True when counter rolls over from zero.
+00EB            314   L004001?:
+00EB 90E010     315            mov     dptr,#0xE010
+00EE 75F000     316            mov     b,#0x00
+00F1 120100     317            lcall   __gptrget
+00F4 A3         318            inc     dptr
+00F5 120100     319            lcall   __gptrget
+00F8 E4         320            clr     a
+00F9 FA         321            mov     r2,a
+00FA FB         322            mov     r3,a
+00FB 4A         323            orl     a,r2
+00FC 6001       324            jz      L004001?
+00FE            325   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:45: STK_CSR = 0x00; // Disable Systick counter
+00FE 90E010     326            mov     dptr,#0xE010
+0101 E4         327            clr     a
+0102 F5F0       328            mov     b,a
+0104 120100     329            lcall   __gptrput
+0107 A3         330            inc     dptr
+0108 E4         331            clr     a
+0109 020100     332            ljmp    __gptrput
+010C            333   ;------------------------------------------------------------
+010C            334   ;Allocation info for local variables in function 'waitus'
+010C            335   ;------------------------------------------------------------
+010C            336   ;len                       Allocated to registers r2 r3 
+010C            337   ;------------------------------------------------------------
+010C            338   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:48: void waitus(int len)
+010C            339   ;        -----------------------------------------
+010C            340   ;         function waitus
+010C            341   ;        -----------------------------------------
+010C            342   _waitus:
+010C AA82       343            mov     r2,dpl
+010E AB83       344            mov     r3,dph
+0110            345   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:50: while(len--) wait_1us();
+0110            346   L005001?:
+0110 8A04       347            mov     ar4,r2
+0112 8B05       348            mov     ar5,r3
+0114 1A         349            dec     r2
+0115 BAFF28     350            cjne    r2,#0xff,L005009?
+0118 1B         351            dec     r3
+0119            352   L005009?:
+0119 EC         353            mov     a,r4
+011A 4D         354            orl     a,r5
+011B 6001       355            jz      L005004?
+011D C002       356            push    ar2
+011F C003       357            push    ar3
+0121 120100     358            lcall   _wait_1us
+0124 D003       359            pop     ar3
+0126 D002       360            pop     ar2
+0128 8001       361            sjmp    L005001?
+012A            362   L005004?:
+012A 22         363            ret
+012B            364   ;------------------------------------------------------------
+012B            365   ;Allocation info for local variables in function 'wait_1ms'
+012B            366   ;------------------------------------------------------------
+012B            367   ;------------------------------------------------------------
+012B            368   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:53: void wait_1ms(void)
+012B            369   ;        -----------------------------------------
+012B            370   ;         function wait_1ms
+012B            371   ;        -----------------------------------------
+012B            372   _wait_1ms:
+012B            373   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:56: STK_RVR = (F_CPU/1000L) - 1;  // set reload register, counter rolls over from zero, hence -1
+012B 90E014     374            mov     dptr,#0xE014
+012E 75F000     375            mov     b,#0x00
+0131 747F       376            mov     a,#0x7F
+0133 120100     377            lcall   __gptrput
+0136 A3         378            inc     dptr
+0137 74BB       379            mov     a,#0xBB
+0139 120100     380            lcall   __gptrput
+013C            381   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:57: STK_CVR = 0; // load the SysTick counter
+013C 90E018     382            mov     dptr,#0xE018
+013F E4         383            clr     a
+0140 F5F0       384            mov     b,a
+0142 120100     385            lcall   __gptrput
+0145 A3         386            inc     dptr
+0146 E4         387            clr     a
+0147 120100     388            lcall   __gptrput
+014A            389   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:58: STK_CSR = 0x05; // Bit 0: ENABLE, BIT 1: TICKINT, BIT 2:CLKSOURCE
+014A 90E010     390            mov     dptr,#0xE010
+014D 75F000     391            mov     b,#0x00
+0150 7405       392            mov     a,#0x05
+0152 120100     393            lcall   __gptrput
+0155 A3         394            inc     dptr
+0156 E4         395            clr     a
+0157 120100     396            lcall   __gptrput
+015A            397   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:59: while((STK_CSR & BIT16)==0); // Bit 16 is the COUNTFLAG.  True when counter rolls over from zero.
+015A            398   L006001?:
+015A 90E010     399            mov     dptr,#0xE010
+015D 75F000     400            mov     b,#0x00
+0160 120100     401            lcall   __gptrget
+0163 A3         402            inc     dptr
+0164 120100     403            lcall   __gptrget
+0167 E4         404            clr     a
+0168 FA         405            mov     r2,a
+0169 FB         406            mov     r3,a
+016A 4A         407            orl     a,r2
+016B 6001       408            jz      L006001?
+016D            409   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:60: STK_CSR = 0x00; // Disable Systick counter
+016D 90E010     410            mov     dptr,#0xE010
+0170 E4         411            clr     a
+0171 F5F0       412            mov     b,a
+0173 120100     413            lcall   __gptrput
+0176 A3         414            inc     dptr
+0177 E4         415            clr     a
+0178 020100     416            ljmp    __gptrput
+017B            417   ;------------------------------------------------------------
+017B            418   ;Allocation info for local variables in function 'waitms'
+017B            419   ;------------------------------------------------------------
+017B            420   ;len                       Allocated to registers r2 r3 
+017B            421   ;------------------------------------------------------------
+017B            422   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:63: void waitms(int len)
+017B            423   ;        -----------------------------------------
+017B            424   ;         function waitms
+017B            425   ;        -----------------------------------------
+017B            426   _waitms:
+017B AA82       427            mov     r2,dpl
+017D AB83       428            mov     r3,dph
+017F            429   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:65: while(len--) wait_1ms();
+017F            430   L007001?:
+017F 8A04       431            mov     ar4,r2
+0181 8B05       432            mov     ar5,r3
+0183 1A         433            dec     r2
+0184 BAFF28     434            cjne    r2,#0xff,L007009?
+0187 1B         435            dec     r3
+0188            436   L007009?:
+0188 EC         437            mov     a,r4
+0189 4D         438            orl     a,r5
+018A 6001       439            jz      L007004?
+018C C002       440            push    ar2
+018E C003       441            push    ar3
+0190 120100     442            lcall   _wait_1ms
+0193 D003       443            pop     ar3
+0195 D002       444            pop     ar2
+0197 8001       445            sjmp    L007001?
+0199            446   L007004?:
+0199 22         447            ret
+019A            448   ;------------------------------------------------------------
+019A            449   ;Allocation info for local variables in function 'GetPeriod'
+019A            450   ;------------------------------------------------------------
+019A            451   ;n                         Allocated to registers r2 r3 
+019A            452   ;i                         Allocated to registers r4 r5 
+019A            453   ;saved_TCNT1a              Allocated with name '_GetPeriod_saved_TCNT1a_1_22'
+019A            454   ;saved_TCNT1b              Allocated with name '_GetPeriod_saved_TCNT1b_1_22'
+019A            455   ;------------------------------------------------------------
+019A            456   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:71: long int GetPeriod (int n)
+019A            457   ;        -----------------------------------------
+019A            458   ;         function GetPeriod
+019A            459   ;        -----------------------------------------
+019A            460   _GetPeriod:
+019A AA82       461            mov     r2,dpl
+019C AB83       462            mov     r3,dph
+019E            463   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:76: STK_RVR = 0xffffff;  // 24-bit counter set to check for signal present
+019E 90E014     464            mov     dptr,#0xE014
+01A1 75F000     465            mov     b,#0x00
+01A4 74FF       466            mov     a,#0xFF
+01A6 120100     467            lcall   __gptrput
+01A9 A3         468            inc     dptr
+01AA 74FF       469            mov     a,#0xFF
+01AC 120100     470            lcall   __gptrput
+01AF            471   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:77: STK_CVR = 0xffffff; // load the SysTick counter
+01AF 90E018     472            mov     dptr,#0xE018
+01B2 75F000     473            mov     b,#0x00
+01B5 74FF       474            mov     a,#0xFF
+01B7 120100     475            lcall   __gptrput
+01BA A3         476            inc     dptr
+01BB 74FF       477            mov     a,#0xFF
+01BD 120100     478            lcall   __gptrput
+01C0            479   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:78: STK_CSR = 0x05; // Bit 0: ENABLE, BIT 1: TICKINT, BIT 2:CLKSOURCE
+01C0 90E010     480            mov     dptr,#0xE010
+01C3 75F000     481            mov     b,#0x00
+01C6 7405       482            mov     a,#0x05
+01C8 120100     483            lcall   __gptrput
+01CB A3         484            inc     dptr
+01CC E4         485            clr     a
+01CD 120100     486            lcall   __gptrput
+01D0            487   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:79: while (PIN_PERIOD!=0) // Wait for square wave to be 0
+01D0            488   L008003?:
+01D0 900010     489            mov     dptr,#0x0010
+01D3 75F000     490            mov     b,#0x00
+01D6 120100     491            lcall   __gptrget
+01D9 FC         492            mov     r4,a
+01DA A3         493            inc     dptr
+01DB 120100     494            lcall   __gptrget
+01DE FD         495            mov     r5,a
+01DF 30E028     496            jnb     acc.0,L008005?
+01E2            497   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:81: if(STK_CSR & BIT16) return 0;
+01E2 90E010     498            mov     dptr,#0xE010
+01E5 75F000     499            mov     b,#0x00
+01E8 120100     500            lcall   __gptrget
+01EB A3         501            inc     dptr
+01EC 120100     502            lcall   __gptrget
+01EF E4         503            clr     a
+01F0 FC         504            mov     r4,a
+01F1 FD         505            mov     r5,a
+01F2 4C         506            orl     a,r4
+01F3 6001       507            jz      L008003?
+01F5 900000     508            mov     dptr,#(0x00&0x00ff)
+01F8 E4         509            clr     a
+01F9 F5F0       510            mov     b,a
+01FB 22         511            ret
+01FC            512   L008005?:
+01FC            513   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:83: STK_CSR = 0x00; // Disable Systick counter
+01FC 90E010     514            mov     dptr,#0xE010
+01FF E4         515            clr     a
+0200 F5F0       516            mov     b,a
+0202 120100     517            lcall   __gptrput
+0205 A3         518            inc     dptr
+0206 E4         519            clr     a
+0207 120100     520            lcall   __gptrput
+020A            521   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:85: STK_RVR = 0xffffff;  // 24-bit counter set to check for signal present
+020A 90E014     522            mov     dptr,#0xE014
+020D 75F000     523            mov     b,#0x00
+0210 74FF       524            mov     a,#0xFF
+0212 120100     525            lcall   __gptrput
+0215 A3         526            inc     dptr
+0216 74FF       527            mov     a,#0xFF
+0218 120100     528            lcall   __gptrput
+021B            529   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:86: STK_CVR = 0xffffff; // load the SysTick counter
+021B 90E018     530            mov     dptr,#0xE018
+021E 75F000     531            mov     b,#0x00
+0221 74FF       532            mov     a,#0xFF
+0223 120100     533            lcall   __gptrput
+0226 A3         534            inc     dptr
+0227 74FF       535            mov     a,#0xFF
+0229 120100     536            lcall   __gptrput
+022C            537   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:87: STK_CSR = 0x05; // Bit 0: ENABLE, BIT 1: TICKINT, BIT 2:CLKSOURCE
+022C 90E010     538            mov     dptr,#0xE010
+022F 75F000     539            mov     b,#0x00
+0232 7405       540            mov     a,#0x05
+0234 120100     541            lcall   __gptrput
+0237 A3         542            inc     dptr
+0238 E4         543            clr     a
+0239 120100     544            lcall   __gptrput
+023C            545   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:88: while (PIN_PERIOD==0) // Wait for square wave to be 1
+023C            546   L008008?:
+023C 900010     547            mov     dptr,#0x0010
+023F 75F000     548            mov     b,#0x00
+0242 120100     549            lcall   __gptrget
+0245 FC         550            mov     r4,a
+0246 A3         551            inc     dptr
+0247 120100     552            lcall   __gptrget
+024A FD         553            mov     r5,a
+024B 20E0A8     554            jb      acc.0,L008010?
+024E            555   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:90: if(STK_CSR & BIT16) return 0;
+024E 90E010     556            mov     dptr,#0xE010
+0251 75F000     557            mov     b,#0x00
+0254 120100     558            lcall   __gptrget
+0257 A3         559            inc     dptr
+0258 120100     560            lcall   __gptrget
+025B E4         561            clr     a
+025C FC         562            mov     r4,a
+025D FD         563            mov     r5,a
+025E 4C         564            orl     a,r4
+025F 6001       565            jz      L008008?
+0261 900000     566            mov     dptr,#(0x00&0x00ff)
+0264 E4         567            clr     a
+0265 F5F0       568            mov     b,a
+0267 22         569            ret
+0268            570   L008010?:
+0268            571   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:92: STK_CSR = 0x00; // Disable Systick counter
+0268 90E010     572            mov     dptr,#0xE010
+026B E4         573            clr     a
+026C F5F0       574            mov     b,a
+026E 120100     575            lcall   __gptrput
+0271 A3         576            inc     dptr
+0272 E4         577            clr     a
+0273 120100     578            lcall   __gptrput
+0276            579   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:94: STK_RVR = 0xffffff;  // 24-bit counter reset
+0276 90E014     580            mov     dptr,#0xE014
+0279 75F000     581            mov     b,#0x00
+027C 74FF       582            mov     a,#0xFF
+027E 120100     583            lcall   __gptrput
+0281 A3         584            inc     dptr
+0282 74FF       585            mov     a,#0xFF
+0284 120100     586            lcall   __gptrput
+0287            587   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:95: STK_CVR = 0xffffff; // load the SysTick counter to initial value
+0287 90E018     588            mov     dptr,#0xE018
+028A 75F000     589            mov     b,#0x00
+028D 74FF       590            mov     a,#0xFF
+028F 120100     591            lcall   __gptrput
+0292 A3         592            inc     dptr
+0293 74FF       593            mov     a,#0xFF
+0295 120100     594            lcall   __gptrput
+0298            595   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:96: STK_CSR = 0x05; // Bit 0: ENABLE, BIT 1: TICKINT, BIT 2:CLKSOURCE
+0298 90E010     596            mov     dptr,#0xE010
+029B 75F000     597            mov     b,#0x00
+029E 7405       598            mov     a,#0x05
+02A0 120100     599            lcall   __gptrput
+02A3 A3         600            inc     dptr
+02A4 E4         601            clr     a
+02A5 120100     602            lcall   __gptrput
+02A8            603   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:97: for(i=0; i<n; i++) // Measure the time of 'n' periods
+02A8 7C00       604            mov     r4,#0x00
+02AA 7D00       605            mov     r5,#0x00
+02AC            606   L008021?:
+02AC C3         607            clr     c
+02AD EC         608            mov     a,r4
+02AE 9A         609            subb    a,r2
+02AF ED         610            mov     a,r5
+02B0 6480       611            xrl     a,#0x80
+02B2 8BF0       612            mov     b,r3
+02B4 63F080     613            xrl     b,#0x80
+02B7 95F0       614            subb    a,b
+02B9 5001       615            jnc     L008024?
+02BB            616   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:99: while (PIN_PERIOD!=0) // Wait for square wave to be 0
+02BB            617   L008013?:
+02BB 900010     618            mov     dptr,#0x0010
+02BE 75F000     619            mov     b,#0x00
+02C1 120100     620            lcall   __gptrget
+02C4 FE         621            mov     r6,a
+02C5 A3         622            inc     dptr
+02C6 120100     623            lcall   __gptrget
+02C9 FF         624            mov     r7,a
+02CA 30E0A8     625            jnb     acc.0,L008018?
+02CD            626   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:101: if(STK_CSR & BIT16) return 0;
+02CD 90E010     627            mov     dptr,#0xE010
+02D0 75F000     628            mov     b,#0x00
+02D3 120100     629            lcall   __gptrget
+02D6 A3         630            inc     dptr
+02D7 120100     631            lcall   __gptrget
+02DA E4         632            clr     a
+02DB FE         633            mov     r6,a
+02DC FF         634            mov     r7,a
+02DD 4E         635            orl     a,r6
+02DE 6001       636            jz      L008013?
+02E0 900000     637            mov     dptr,#(0x00&0x00ff)
+02E3 E4         638            clr     a
+02E4 F5F0       639            mov     b,a
+02E6 22         640            ret
+02E7            641   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:103: while (PIN_PERIOD==0) // Wait for square wave to be 1
+02E7            642   L008018?:
+02E7 900010     643            mov     dptr,#0x0010
+02EA 75F000     644            mov     b,#0x00
+02ED 120100     645            lcall   __gptrget
+02F0 FE         646            mov     r6,a
+02F1 A3         647            inc     dptr
+02F2 120100     648            lcall   __gptrget
+02F5 FF         649            mov     r7,a
+02F6 20E0E8     650            jb      acc.0,L008023?
+02F9            651   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:105: if(STK_CSR & BIT16) return 0;
+02F9 90E010     652            mov     dptr,#0xE010
+02FC 75F000     653            mov     b,#0x00
+02FF 120100     654            lcall   __gptrget
+0302 A3         655            inc     dptr
+0303 120100     656            lcall   __gptrget
+0306 E4         657            clr     a
+0307 FE         658            mov     r6,a
+0308 FF         659            mov     r7,a
+0309 4E         660            orl     a,r6
+030A 6001       661            jz      L008018?
+030C 900000     662            mov     dptr,#(0x00&0x00ff)
+030F E4         663            clr     a
+0310 F5F0       664            mov     b,a
+0312 22         665            ret
+0313            666   L008023?:
+0313            667   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:97: for(i=0; i<n; i++) // Measure the time of 'n' periods
+0313 0C         668            inc     r4
+0314 BC00E8     669            cjne    r4,#0x00,L008021?
+0317 0D         670            inc     r5
+0318 8001       671            sjmp    L008021?
+031A            672   L008024?:
+031A            673   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:108: STK_CSR = 0x00; // Disable Systick counter
+031A 90E010     674            mov     dptr,#0xE010
+031D E4         675            clr     a
+031E F5F0       676            mov     b,a
+0320 120100     677            lcall   __gptrput
+0323 A3         678            inc     dptr
+0324 E4         679            clr     a
+0325 120100     680            lcall   __gptrput
+0328            681   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:110: return 0xffffff-STK_CVR;
+0328 90E018     682            mov     dptr,#0xE018
+032B 75F000     683            mov     b,#0x00
+032E 120100     684            lcall   __gptrget
+0331 FA         685            mov     r2,a
+0332 A3         686            inc     dptr
+0333 120100     687            lcall   __gptrget
+0336 FB         688            mov     r3,a
+0337 E4         689            clr     a
+0338 FC         690            mov     r4,a
+0339 FD         691            mov     r5,a
+033A 74FF       692            mov     a,#0xFF
+033C C3         693            clr     c
+033D 9A         694            subb    a,r2
+033E FA         695            mov     r2,a
+033F 74FF       696            mov     a,#0xFF
+0341 9B         697            subb    a,r3
+0342 FB         698            mov     r3,a
+0343 74FF       699            mov     a,#0xFF
+0345 9C         700            subb    a,r4
+0346 FC         701            mov     r4,a
+0347 E4         702            clr     a
+0348 9D         703            subb    a,r5
+0349 8A82       704            mov     dpl,r2
+034B 8B83       705            mov     dph,r3
+034D 8CF0       706            mov     b,r4
+034F 22         707            ret
+0350            708   ;------------------------------------------------------------
+0350            709   ;Allocation info for local variables in function 'wait_timer'
+0350            710   ;------------------------------------------------------------
+0350            711   ;period                    Allocated to registers r2 r3 
+0350            712   ;i                         Allocated to registers r6 r7 
+0350            713   ;j                         Allocated to registers r4 r5 
+0350            714   ;------------------------------------------------------------
+0350            715   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:113: void wait_timer (int period)
+0350            716   ;        -----------------------------------------
+0350            717   ;         function wait_timer
+0350            718   ;        -----------------------------------------
+0350            719   _wait_timer:
+0350 AA82       720            mov     r2,dpl
+0352 AB83       721            mov     r3,dph
+0354            722   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:117: if (period <= 255)
+0354 C3         723            clr     c
+0355 74FF       724            mov     a,#0xFF
+0357 9A         725            subb    a,r2
+0358 E4         726            clr     a
+0359 6480       727            xrl     a,#0x80
+035B 8BF0       728            mov     b,r3
+035D 63F080     729            xrl     b,#0x80
+0360 95F0       730            subb    a,b
+0362 4001       731            jc      L009002?
+0364            732   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:119: waitus(period);
+0364 8A82       733            mov     dpl,r2
+0366 8B83       734            mov     dph,r3
+0368 020100     735            ljmp    _waitus
+036B            736   L009002?:
+036B            737   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:123: j = period / 255;
+036B 7500FF     738            mov     __divsint_PARM_2,#0xFF
+036E E4         739            clr     a
+036F F501       740            mov     (__divsint_PARM_2 + 1),a
+0371 8A82       741            mov     dpl,r2
+0373 8B83       742            mov     dph,r3
+0375 C002       743            push    ar2
+0377 C003       744            push    ar3
+0379 120100     745            lcall   __divsint
+037C AC82       746            mov     r4,dpl
+037E AD83       747            mov     r5,dph
+0380 D003       748            pop     ar3
+0382 D002       749            pop     ar2
+0384            750   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:124: for (i = 0; i<j; i++)
+0384 7E00       751            mov     r6,#0x00
+0386 7F00       752            mov     r7,#0x00
+0388            753   L009004?:
+0388 C3         754            clr     c
+0389 EE         755            mov     a,r6
+038A 9C         756            subb    a,r4
+038B EF         757            mov     a,r7
+038C 6480       758            xrl     a,#0x80
+038E 8DF0       759            mov     b,r5
+0390 63F080     760            xrl     b,#0x80
+0393 95F0       761            subb    a,b
+0395 5001       762            jnc     L009007?
+0397            763   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:126: waitus(255);
+0397 9000FF     764            mov     dptr,#0x00FF
+039A C002       765            push    ar2
+039C C003       766            push    ar3
+039E C004       767            push    ar4
+03A0 C005       768            push    ar5
+03A2 C006       769            push    ar6
+03A4 C007       770            push    ar7
+03A6 120100     771            lcall   _waitus
+03A9 D007       772            pop     ar7
+03AB D006       773            pop     ar6
+03AD D005       774            pop     ar5
+03AF D004       775            pop     ar4
+03B1 D003       776            pop     ar3
+03B3 D002       777            pop     ar2
+03B5            778   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:124: for (i = 0; i<j; i++)
+03B5 0E         779            inc     r6
+03B6 BE0068     780            cjne    r6,#0x00,L009004?
+03B9 0F         781            inc     r7
+03BA 8001       782            sjmp    L009004?
+03BC            783   L009007?:
+03BC            784   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:128: waitus(period % 255);
+03BC 7500FF     785            mov     __modsint_PARM_2,#0xFF
+03BF E4         786            clr     a
+03C0 F501       787            mov     (__modsint_PARM_2 + 1),a
+03C2 8A82       788            mov     dpl,r2
+03C4 8B83       789            mov     dph,r3
+03C6 120100     790            lcall   __modsint
+03C9 AB83       791            mov  r3,dph
+03CB 020100     792            ljmp    _waitus
+03CE            793   ;------------------------------------------------------------
+03CE            794   ;Allocation info for local variables in function 'soundpulse'
+03CE            795   ;------------------------------------------------------------
+03CE            796   ;period                    Allocated to registers r2 r3 
+03CE            797   ;------------------------------------------------------------
+03CE            798   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:132: void soundpulse (int period)
+03CE            799   ;        -----------------------------------------
+03CE            800   ;         function soundpulse
+03CE            801   ;        -----------------------------------------
+03CE            802   _soundpulse:
+03CE AA82       803            mov     r2,dpl
+03D0 AB83       804            mov     r3,dph
+03D2            805   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:134: GPIOA_ODR |= 0x00000001; // PA0=1
+03D2 900014     806            mov     dptr,#0x0014
+03D5 75F000     807            mov     b,#0x00
+03D8 120100     808            lcall   __gptrget
+03DB FC         809            mov     r4,a
+03DC A3         810            inc     dptr
+03DD 120100     811            lcall   __gptrget
+03E0 FD         812            mov     r5,a
+03E1 430401     813            orl     ar4,#0x01
+03E4 900014     814            mov     dptr,#(0x14&0x00ff)
+03E7 E4         815            clr     a
+03E8 F5F0       816            mov     b,a
+03EA EC         817            mov     a,r4
+03EB 120100     818            lcall   __gptrput
+03EE A3         819            inc     dptr
+03EF ED         820            mov     a,r5
+03F0 120100     821            lcall   __gptrput
+03F3            822   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:135: wait_timer(period);
+03F3 8A82       823            mov     dpl,r2
+03F5 8B83       824            mov     dph,r3
+03F7 C002       825            push    ar2
+03F9 C003       826            push    ar3
+03FB 120100     827            lcall   _wait_timer
+03FE D003       828            pop     ar3
+0400 D002       829            pop     ar2
+0402            830   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:136: GPIOA_ODR &= ~(0x00000001); // PA0=0
+0402 900014     831            mov     dptr,#0x0014
+0405 75F000     832            mov     b,#0x00
+0408 120100     833            lcall   __gptrget
+040B FC         834            mov     r4,a
+040C A3         835            inc     dptr
+040D 120100     836            lcall   __gptrget
+0410 FD         837            mov     r5,a
+0411 5304FE     838            anl     ar4,#0xFE
+0414 900014     839            mov     dptr,#(0x14&0x00ff)
+0417 E4         840            clr     a
+0418 F5F0       841            mov     b,a
+041A EC         842            mov     a,r4
+041B 120100     843            lcall   __gptrput
+041E A3         844            inc     dptr
+041F ED         845            mov     a,r5
+0420 120100     846            lcall   __gptrput
+0423            847   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:137: wait_timer(period);
+0423 8A82       848            mov     dpl,r2
+0425 8B83       849            mov     dph,r3
+0427 020100     850            ljmp    _wait_timer
+042A            851   ;------------------------------------------------------------
+042A            852   ;Allocation info for local variables in function 'main'
+042A            853   ;------------------------------------------------------------
+042A            854   ;count                     Allocated to registers r6 r7 r0 r1 
+042A            855   ;countref                  Allocated to registers r2 r3 r4 r5 
+042A            856   ;T                         Allocated to registers r2 r3 r4 r5 
+042A            857   ;f                         Allocated to registers r2 r3 r4 r5 
+042A            858   ;Tref                      Allocated to registers r2 r3 r4 r5 
+042A            859   ;fref                      Allocated with name '_main_fref_1_36'
+042A            860   ;------------------------------------------------------------
+042A            861   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:140: void main(void)
+042A            862   ;        -----------------------------------------
+042A            863   ;         function main
+042A            864   ;        -----------------------------------------
+042A            865   _main:
+042A            866   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:146: RCC_AHBENR |= 0x00020000; // peripheral clock enable for port A
+042A 901014     867            mov     dptr,#0x1014
+042D 75F002     868            mov     b,#0x02
+0430 120100     869            lcall   __gptrget
+0433 FA         870            mov     r2,a
+0434 A3         871            inc     dptr
+0435 120100     872            lcall   __gptrget
+0438 FB         873            mov     r3,a
+0439 7C00       874            mov     r4,#0x00
+043B 430402     875            orl     ar4,#0x02
+043E 901014     876            mov     dptr,#0x1014
+0441 75F002     877            mov     b,#0x02
+0444 EA         878            mov     a,r2
+0445 120100     879            lcall   __gptrput
+0448 A3         880            inc     dptr
+0449 EB         881            mov     a,r3
+044A 120100     882            lcall   __gptrput
+044D            883   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:149: GPIOA_MODER &= ~(BIT16 | BIT17); // Make pin PA8 input
+044D 900000     884            mov     dptr,#0x0000
+0450 75F000     885            mov     b,#0x00
+0453 120100     886            lcall   __gptrget
+0456 FA         887            mov     r2,a
+0457 A3         888            inc     dptr
+0458 120100     889            lcall   __gptrget
+045B FB         890            mov     r3,a
+045C 900000     891            mov     dptr,#(0x00&0x00ff)
+045F E4         892            clr     a
+0460 F5F0       893            mov     b,a
+0462 EA         894            mov     a,r2
+0463 120100     895            lcall   __gptrput
+0466 A3         896            inc     dptr
+0467 EB         897            mov     a,r3
+0468 120100     898            lcall   __gptrput
+046B            899   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:151: GPIOA_PUPDR |= BIT16; 
+046B 90000C     900            mov     dptr,#0x000C
+046E 75F000     901            mov     b,#0x00
+0471 120100     902            lcall   __gptrget
+0474 FA         903            mov     r2,a
+0475 A3         904            inc     dptr
+0476 120100     905            lcall   __gptrget
+0479 FB         906            mov     r3,a
+047A 90000C     907            mov     dptr,#(0x0C&0x00ff)
+047D E4         908            clr     a
+047E F5F0       909            mov     b,a
+0480 EA         910            mov     a,r2
+0481 120100     911            lcall   __gptrput
+0484 A3         912            inc     dptr
+0485 EB         913            mov     a,r3
+0486 120100     914            lcall   __gptrput
+0489            915   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:152: GPIOA_PUPDR &= ~(BIT17); 
+0489 90000C     916            mov     dptr,#0x000C
+048C 75F000     917            mov     b,#0x00
+048F 120100     918            lcall   __gptrget
+0492 FA         919            mov     r2,a
+0493 A3         920            inc     dptr
+0494 120100     921            lcall   __gptrget
+0497 FB         922            mov     r3,a
+0498 90000C     923            mov     dptr,#(0x0C&0x00ff)
+049B E4         924            clr     a
+049C F5F0       925            mov     b,a
+049E EA         926            mov     a,r2
+049F 120100     927            lcall   __gptrput
+04A2 A3         928            inc     dptr
+04A3 EB         929            mov     a,r3
+04A4 120100     930            lcall   __gptrput
+04A7            931   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:155: RCC_AHBENR |= 0x00020000; // peripheral clock enable for port A
+04A7 901014     932            mov     dptr,#0x1014
+04AA 75F002     933            mov     b,#0x02
+04AD 120100     934            lcall   __gptrget
+04B0 FA         935            mov     r2,a
+04B1 A3         936            inc     dptr
+04B2 120100     937            lcall   __gptrget
+04B5 FB         938            mov     r3,a
+04B6 7C00       939            mov     r4,#0x00
+04B8 430402     940            orl     ar4,#0x02
+04BB 901014     941            mov     dptr,#0x1014
+04BE 75F002     942            mov     b,#0x02
+04C1 EA         943            mov     a,r2
+04C2 120100     944            lcall   __gptrput
+04C5 A3         945            inc     dptr
+04C6 EB         946            mov     a,r3
+04C7 120100     947            lcall   __gptrput
+04CA            948   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:156: GPIOA_MODER |= 0x00000001; // Make pin PA0 output
+04CA 900000     949            mov     dptr,#0x0000
+04CD 75F000     950            mov     b,#0x00
+04D0 120100     951            lcall   __gptrget
+04D3 FA         952            mov     r2,a
+04D4 A3         953            inc     dptr
+04D5 120100     954            lcall   __gptrget
+04D8 FB         955            mov     r3,a
+04D9 430201     956            orl     ar2,#0x01
+04DC 900000     957            mov     dptr,#(0x00&0x00ff)
+04DF E4         958            clr     a
+04E0 F5F0       959            mov     b,a
+04E2 EA         960            mov     a,r2
+04E3 120100     961            lcall   __gptrput
+04E6 A3         962            inc     dptr
+04E7 EB         963            mov     a,r3
+04E8 120100     964            lcall   __gptrput
+04EB            965   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:158: waitms(500); // Wait for putty to start.
+04EB 9001F4     966            mov     dptr,#0x01F4
+04EE 120100     967            lcall   _waitms
+04F1            968   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:160: "Connect signal to PA8 (pin 18).\r\n");
+04F1 9050E8     969            mov     dptr,#__str_0
+04F4 75F080     970            mov     b,#0x80
+04F7 120100     971            lcall   _eputs
+04FA            972   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:162: countref=GetPeriod(100);
+04FA 900064     973            mov     dptr,#0x0064
+04FD 120100     974            lcall   _GetPeriod
+0500 AA82       975            mov     r2,dpl
+0502 AB83       976            mov     r3,dph
+0504 ACF0       977            mov     r4,b
+0506 FD         978            mov     r5,a
+0507            979   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:163: if(countref>0)
+0507 C3         980            clr     c
+0508 E4         981            clr     a
+0509 9A         982            subb    a,r2
+050A E4         983            clr     a
+050B 9B         984            subb    a,r3
+050C E4         985            clr     a
+050D 9C         986            subb    a,r4
+050E E4         987            clr     a
+050F 6480       988            xrl     a,#0x80
+0511 8DF0       989            mov     b,r5
+0513 63F080     990            xrl     b,#0x80
+0516 95F0       991            subb    a,b
+0518 5001       992            jnc     L011009?
+051A            993   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:165: Tref=countref/(F_CPU*100.0);
+051A 8A82       994            mov     dpl,r2
+051C 8B83       995            mov     dph,r3
+051E 8CF0       996            mov     b,r4
+0520 ED         997            mov     a,r5
+0521 120100     998            lcall   ___slong2fs
+0524 AA82       999            mov     r2,dpl
+0526 AB83      1000            mov     r3,dph
+0528 ACF0      1001            mov     r4,b
+052A FD        1002            mov     r5,a
+052B 7418      1003            mov     a,#0x18
+052D C0E0      1004            push    acc
+052F 740D      1005            mov     a,#0x0D
+0531 C0E0      1006            push    acc
+0533 748F      1007            mov     a,#0x8F
+0535 C0E0      1008            push    acc
+0537 744F      1009            mov     a,#0x4F
+0539 C0E0      1010            push    acc
+053B 8A82      1011            mov     dpl,r2
+053D 8B83      1012            mov     dph,r3
+053F 8CF0      1013            mov     b,r4
+0541 ED        1014            mov     a,r5
+0542 120100    1015            lcall   ___fsdiv
+0545 AA82      1016            mov     r2,dpl
+0547 AB83      1017            mov     r3,dph
+0549 ACF0      1018            mov     r4,b
+054B FD        1019            mov     r5,a
+054C E581      1020            mov     a,sp
+054E 24FC      1021            add     a,#0xfc
+0550 F581      1022            mov     sp,a
+0552           1023   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:166: fref=1/Tref;
+0552 C002      1024            push    ar2
+0554 C003      1025            push    ar3
+0556 C004      1026            push    ar4
+0558 C005      1027            push    ar5
+055A 900000    1028            mov     dptr,#0x0000
+055D 75F080    1029            mov     b,#0x80
+0560 743F      1030            mov     a,#0x3F
+0562 120100    1031            lcall   ___fsdiv
+0565 858290    1032            mov     _main_fref_1_36,dpl
+0568 858391    1033            mov     (_main_fref_1_36 + 1),dph
+056B 85F092    1034            mov     (_main_fref_1_36 + 2),b
+056E F593      1035            mov     (_main_fref_1_36 + 3),a
+0570 E581      1036            mov     a,sp
+0572 24FC      1037            add     a,#0xfc
+0574 F581      1038            mov     sp,a
+0576           1039   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:169: while(1)
+0576           1040   L011009?:
+0576           1041   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:171: count=GetPeriod(100);
+0576 900064    1042            mov     dptr,#0x0064
+0579 120100    1043            lcall   _GetPeriod
+057C AE82      1044            mov     r6,dpl
+057E AF83      1045            mov     r7,dph
+0580 A8F0      1046            mov     r0,b
+0582 F9        1047            mov     r1,a
+0583           1048   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:172: if(count>0)
+0583 C3        1049            clr     c
+0584 E4        1050            clr     a
+0585 9E        1051            subb    a,r6
+0586 E4        1052            clr     a
+0587 9F        1053            subb    a,r7
+0588 E4        1054            clr     a
+0589 98        1055            subb    a,r0
+058A E4        1056            clr     a
+058B 6480      1057            xrl     a,#0x80
+058D 89F0      1058            mov     b,r1
+058F 63F080    1059            xrl     b,#0x80
+0592 95F0      1060            subb    a,b
+0594 4001      1061            jc      L011018?
+0596 020100    1062            ljmp    L011006?
+0599           1063   L011018?:
+0599           1064   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:174: T=count/(F_CPU*100.0);
+0599 8E82      1065            mov     dpl,r6
+059B 8F83      1066            mov     dph,r7
+059D 88F0      1067            mov     b,r0
+059F E9        1068            mov     a,r1
+05A0 C006      1069            push    ar6
+05A2 C007      1070            push    ar7
+05A4 C000      1071            push    ar0
+05A6 C001      1072            push    ar1
+05A8 120100    1073            lcall   ___slong2fs
+05AB AA82      1074            mov     r2,dpl
+05AD AB83      1075            mov     r3,dph
+05AF ACF0      1076            mov     r4,b
+05B1 FD        1077            mov     r5,a
+05B2 7418      1078            mov     a,#0x18
+05B4 C0E0      1079            push    acc
+05B6 740D      1080            mov     a,#0x0D
+05B8 C0E0      1081            push    acc
+05BA 748F      1082            mov     a,#0x8F
+05BC C0E0      1083            push    acc
+05BE 744F      1084            mov     a,#0x4F
+05C0 C0E0      1085            push    acc
+05C2 8A82      1086            mov     dpl,r2
+05C4 8B83      1087            mov     dph,r3
+05C6 8CF0      1088            mov     b,r4
+05C8 ED        1089            mov     a,r5
+05C9 120100    1090            lcall   ___fsdiv
+05CC AA82      1091            mov     r2,dpl
+05CE AB83      1092            mov     r3,dph
+05D0 ACF0      1093            mov     r4,b
+05D2 FD        1094            mov     r5,a
+05D3 E581      1095            mov     a,sp
+05D5 24FC      1096            add     a,#0xfc
+05D7 F581      1097            mov     sp,a
+05D9           1098   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:175: f=1/T;
+05D9 C002      1099            push    ar2
+05DB C003      1100            push    ar3
+05DD C004      1101            push    ar4
+05DF C005      1102            push    ar5
+05E1 900000    1103            mov     dptr,#0x0000
+05E4 75F080    1104            mov     b,#0x80
+05E7 743F      1105            mov     a,#0x3F
+05E9 120100    1106            lcall   ___fsdiv
+05EC AA82      1107            mov     r2,dpl
+05EE AB83      1108            mov     r3,dph
+05F0 ACF0      1109            mov     r4,b
+05F2 FD        1110            mov     r5,a
+05F3 E581      1111            mov     a,sp
+05F5 24FC      1112            add     a,#0xfc
+05F7 F581      1113            mov     sp,a
+05F9 D001      1114            pop     ar1
+05FB D000      1115            pop     ar0
+05FD D007      1116            pop     ar7
+05FF D006      1117            pop     ar6
+0601           1118   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:176: eputs("f=");
+0601 9052A8    1119            mov     dptr,#__str_1
+0604 75F080    1120            mov     b,#0x80
+0607 C002      1121            push    ar2
+0609 C003      1122            push    ar3
+060B C004      1123            push    ar4
+060D C005      1124            push    ar5
+060F C006      1125            push    ar6
+0611 C007      1126            push    ar7
+0613 C000      1127            push    ar0
+0615 C001      1128            push    ar1
+0617 120100    1129            lcall   _eputs
+061A D001      1130            pop     ar1
+061C D000      1131            pop     ar0
+061E D007      1132            pop     ar7
+0620 D006      1133            pop     ar6
+0622 D005      1134            pop     ar5
+0624 D004      1135            pop     ar4
+0626 D003      1136            pop     ar3
+0628 D002      1137            pop     ar2
+062A           1138   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:177: PrintNumber(f, 10, 7);
+062A 8A82      1139            mov     dpl,r2
+062C 8B83      1140            mov     dph,r3
+062E 8CF0      1141            mov     b,r4
+0630 ED        1142            mov     a,r5
+0631 C002      1143            push    ar2
+0633 C003      1144            push    ar3
+0635 C004      1145            push    ar4
+0637 C005      1146            push    ar5
+0639 C006      1147            push    ar6
+063B C007      1148            push    ar7
+063D C000      1149            push    ar0
+063F C001      1150            push    ar1
+0641 120100    1151            lcall   ___fs2sint
+0644 75300A    1152            mov     _PrintNumber_PARM_2,#0x0A
+0647 E4        1153            clr     a
+0648 F531      1154            mov     (_PrintNumber_PARM_2 + 1),a
+064A 75E007    1155            mov     _PrintNumber_PARM_3,#0x07
+064D E4        1156            clr     a
+064E F5E1      1157            mov     (_PrintNumber_PARM_3 + 1),a
+0650 120100    1158            lcall   _PrintNumber
+0653           1159   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:178: eputs("Hz, count=");
+0653 905328    1160            mov     dptr,#__str_2
+0656 75F080    1161            mov     b,#0x80
+0659 120100    1162            lcall   _eputs
+065C D001      1163            pop     ar1
+065E D000      1164            pop     ar0
+0660 D007      1165            pop     ar7
+0662 D006      1166            pop     ar6
+0664           1167   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:179: PrintNumber(count, 10, 6);
+0664 8E82      1168            mov     dpl,r6
+0666 8F83      1169            mov     dph,r7
+0668 75300A    1170            mov     _PrintNumber_PARM_2,#0x0A
+066B E4        1171            clr     a
+066C F531      1172            mov     (_PrintNumber_PARM_2 + 1),a
+066E 75E006    1173            mov     _PrintNumber_PARM_3,#0x06
+0671 E4        1174            clr     a
+0672 F5E1      1175            mov     (_PrintNumber_PARM_3 + 1),a
+0674 120100    1176            lcall   _PrintNumber
+0677           1177   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:180: eputs("\r");
+0677 905368    1178            mov     dptr,#__str_3
+067A 75F080    1179            mov     b,#0x80
+067D 120100    1180            lcall   _eputs
+0680           1181   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:182: if (f > (fref+70)) {
+0680 E4        1182            clr     a
+0681 C0E0      1183            push    acc
+0683 C0E0      1184            push    acc
+0685 748C      1185            mov     a,#0x8C
+0687 C0E0      1186            push    acc
+0689 7442      1187            mov     a,#0x42
+068B C0E0      1188            push    acc
+068D 859082    1189            mov     dpl,_main_fref_1_36
+0690 859183    1190            mov     dph,(_main_fref_1_36 + 1)
+0693 8592F0    1191            mov     b,(_main_fref_1_36 + 2)
+0696 E593      1192            mov     a,(_main_fref_1_36 + 3)
+0698 120100    1193            lcall   ___fsadd
+069B AE82      1194            mov     r6,dpl
+069D AF83      1195            mov     r7,dph
+069F A8F0      1196            mov     r0,b
+06A1 F9        1197            mov     r1,a
+06A2 E581      1198            mov     a,sp
+06A4 24FC      1199            add     a,#0xfc
+06A6 F581      1200            mov     sp,a
+06A8 D005      1201            pop     ar5
+06AA D004      1202            pop     ar4
+06AC D003      1203            pop     ar3
+06AE D002      1204            pop     ar2
+06B0 C006      1205            push    ar6
+06B2 C007      1206            push    ar7
+06B4 C000      1207            push    ar0
+06B6 C001      1208            push    ar1
+06B8 8A82      1209            mov     dpl,r2
+06BA 8B83      1210            mov     dph,r3
+06BC 8CF0      1211            mov     b,r4
+06BE ED        1212            mov     a,r5
+06BF 120100    1213            lcall   ___fsgt
+06C2 AA82      1214            mov     r2,dpl
+06C4 E581      1215            mov     a,sp
+06C6 24FC      1216            add     a,#0xfc
+06C8 F581      1217            mov     sp,a
+06CA EA        1218            mov     a,r2
+06CB 7001      1219            jnz     L011019?
+06CD 020100    1220            ljmp    L011009?
+06D0           1221   L011019?:
+06D0           1222   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:183: soundpulse(E6);
+06D0 9002F6    1223            mov     dptr,#0x02F6
+06D3 120100    1224            lcall   _soundpulse
+06D6 020100    1225            ljmp    L011009?
+06D9           1226   L011006?:
+06D9           1227   ;        C:\Users\tnurs\Desktop\UBC\Year_2\ELEC291\lab7\STMexamples\Period\main.c:189: eputs("NO SIGNAL\r");
+06D9 905468    1228            mov     dptr,#__str_4
+06DC 75F080    1229            mov     b,#0x80
+06DF 120100    1230            lcall   _eputs
+06E2 020100    1231            ljmp    L011009?
+06E5           1232            rseg R_CSEG
+06E5           1233   
+0000           1234            rseg R_XINIT
+0000           1235   
+0000           1236            rseg R_CONST
+0000           1237   __str_0:
+0000 50657269  1238            db 'Period measurement using the Systick free running counter.'
+     6F64206D
+     65617375
+     72656D65
+     6E742075
+     73696E67
+     20746865
+     20537973
+     7469636B
+     20667265
+     65207275
+     6E6E696E
+     6720636F
+     756E7465
+     722E
+003A 0D        1239            db 0x0D
+003B 0A        1240            db 0x0A
+003C 436F6E6E  1241            db 'Connect signal to PA8 (pin 18).'
+     65637420
+     7369676E
+     616C2074
+     6F205041
+     38202870
+     696E2031
+     38292E
+005B 0D        1242            db 0x0D
+005C 0A        1243            db 0x0A
+005D 00        1244            db 0x00
+005E           1245   __str_1:
+005E 663D      1246            db 'f='
+0060 00        1247            db 0x00
+0061           1248   __str_2:
+0061 487A2C20  1249            db 'Hz, count='
+     636F756E
+     743D
+006B 00        1250            db 0x00
+006C           1251   __str_3:
+006C 0D        1252            db 0x0D
+006D 00        1253            db 0x00
+006E           1254   __str_4:
+006E 4E4F2053  1255            db 'NO SIGNAL'
+     49474E41
+     4C
+0077 0D        1256            db 0x0D
+0078 00        1257            db 0x00
+0079           1258   
+0003           1259            CSEG
+0003           1260   
+0003           1261   end
