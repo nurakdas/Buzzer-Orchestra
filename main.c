@@ -33,7 +33,7 @@ void delay(int dly)
 
 char HexDigit[]="0123456789ABCDEF";
 void PrintNumber(int N, int Base, int digits)
-{ 
+{
 	int j;
 	#define NBITS 32
 	char buff[NBITS+1];
@@ -91,24 +91,14 @@ void waitms(int len)
 	while(len--) wait_1ms();
 }
 
-void soundbuzz (int period)
-{
-	GPIOA_ODR |= 0x00000002; // PA1=1
-	GPIOA_ODR |= 0x00000001; // PA0=1
-	waitustimer(period/2);
-	GPIOA_ODR &= ~(0x00000002); // PA1=0
-	GPIOA_ODR &= ~(0x00000001); // PA0=0
-	waitustimer(period/2);
-}
-
 void music (int period) {
-	GPIOA_ODR |= 0x00000002; // PA1=1
+	GPIOA_ODR |= 0x1; // PA0=1
 	waitustimer(period/2);
-	GPIOA_ODR &= ~(0x00000002); // PA1=0
+	GPIOA_ODR &= ~(0x1); // PA0=0
 	waitustimer(period/2);
 }
 
-void playmusic (int timerlimit) {
+void beethoven (int timerlimit) {
 	int i;
 	for (i = 0; i < timerlimit; i++)
 		music(G4);
@@ -259,6 +249,41 @@ void playmusic (int timerlimit) {
 	for (i = 0; i < 16*timerlimit; i++) {}
 }
 
+void buzzer1 (int period) {
+	GPIOA_ODR |= 0x1; // PA0=1
+	waitustimer(period/2);
+	GPIOA_ODR &= ~(0x1); // PA0=0
+	waitustimer(period/2);
+}
+
+void buzzer2 (int period) {
+	GPIOB_ODR |= 0x4; // PB2=1
+	waitustimer(period/2);
+	GPIOB_ODR &= ~(0x4); // PB2=0
+	waitustimer(period/2);
+}
+
+void buzzer3 (int period) {
+	GPIOB_ODR |= 0x80; // PB7=1
+	waitustimer(period/2);
+	GPIOB_ODR &= ~(0x80); // PB7=0
+	waitustimer(period/2);
+}
+
+void buzzer4 (int period) {
+	GPIOA_ODR |= 0x8000; // PA15=1
+	waitustimer(period/2);
+	GPIOA_ODR &= ~(0x8000); // PA15=0
+	waitustimer(period/2);
+}
+
+void buzzer5 (int period) {
+	GPIOA_ODR |= 0x100; // PA8=1
+	waitustimer(period/2);
+	GPIOA_ODR &= ~(0x100); // PA8=0
+	waitustimer(period/2);
+}
+
 void main(void)
 {
 	printf("\e[1;1H\e[2J"); // Clears the screen with each reboot/reset/restart
@@ -267,38 +292,32 @@ void main(void)
 	int customt = 0;
 	int timerlimit = 33;
 	notebuff[0] = '0';
-	
-	RCC_AHBENR |= 0x00020000; // peripheral clock enable for port A
-	
+
+	// Peripheral clock initialisation
+	RCC_AHBENR |= 0x20000; // peripheral clock enable for port A
+	RCC_AHBENR |= 0x40000; // periphreal clock enable for port B
+
+	/*
 	// Information here: http://hertaville.com/stm32f0-gpio-tutorial-part-1.html
 	GPIOA_MODER &= ~(BIT16 | BIT17); // Make pin PA8 input
 	// Activate pull up for pin PA8:
-	GPIOA_PUPDR |= BIT16; 
-	GPIOA_PUPDR &= ~(BIT17); 
-	
-	//Port A initialisation
-	RCC_AHBENR |= 0x00020000; // peripheral clock enable for port A
-	
-	//Sound initialisation
-	GPIOA_MODER |= 0x00000004; // Make pin PA1 output
-	
-	//LED initialisation
-	//GPIOA_MODER |= 0x00004000; // Make pin PA7 (13) output
-	//GPIOA_MODER |= 0x00000010; // Make pin PA2 (8) output
-	GPIOA_MODER |= 0x00000001; // Make pin PA0 (6) output
+	GPIOA_PUPDR |= BIT16;
+	GPIOA_PUPDR &= ~(BIT17);
+	*/
 
-	waitms(500); // Wait for putty to start.
-	
+	// Sound initialisation
+	GPIOA_MODER |= 0x1; // Make pin PA0 (6) output
+	GPIOB_MODER |= 0x10; // Make pin PB2 (16) output
+	GPIOB_MODER |= 0x4000; // Make pin PB7 (30) output
+	GPIOA_MODER |= 0x40000000; // Make pin PA15 (25) output
+	GPIOA_MODER |= 0x10000; // Make pin PA8 (18) output
+	waitms(500); // Wait for putty to start
+
 	printf("\r\n");
-	printf("Please select the mode of feedback (Pressing the number is enough):\r\n");
-	printf("1) Beeping (The closer the coin, the faster the beep).\r\n");
-	printf("2) Buzzing (The closer the coin, the higher pitched the buzz).\r\n");
-	printf("3) Play your desired frequency upon coin detection.\r\n");
-	printf("4) Play your desired note upon coin detection.\r\n");
-	printf("5) Maestro, music! (Plays music instead of buzzing annoyingly).\r\n");
-	printf("6) Visual LED blinker.\r\n");
-	printf("7) Tell me which coin I'm using! Press the coin against the coil.\r\n");
-	printf("Enter 1, 2, 3, 4, 5, 6, or 7: ");
+	printf("Please select your music piece:\r\n");
+	printf("1) Beethoven - Symphony no. 5\r\n");
+	printf("Enter 1: ");
+
 	fflush(stdout);
 	egets(buff, sizeof(buff)-1);
 	printf("%s\r\n", buff);
@@ -306,7 +325,9 @@ void main(void)
 	mode=atoi(buff);
 
 	while(1)
-	{		
-		playmusic(timerlimit);
+	{
+		//beethoven(timerlimit);
+		//buzzer1(G4);
+		buzzer4(G4);
 	}
 }
