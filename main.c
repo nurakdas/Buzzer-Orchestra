@@ -192,8 +192,7 @@ void buzzermania (int period) {
 	waitustimer(period/2);
 }
 
-void main(void)
-{
+void main (void) {
 	printf("\e[1;1H\e[2J"); // Clears the screen with each reboot/reset/restart
 	char buff[3]; // buff[0]=user input, buff[1]=\, buff[2]=0
 	int mode; // User input, equal to buff[0]
@@ -226,8 +225,7 @@ void main(void)
 	fflush(stdout);
 	mode=atoi(buff);
 
-	while(1)
-	{
+	while(1) {
 		if (mode == 1) {
 		
 			for (i = 0; i < 33; i++) {buzzer1(C5); buzzer2(C3);}
